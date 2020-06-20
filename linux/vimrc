@@ -23,7 +23,7 @@ set formatoptions+=mM
 
 " display
 "----------------------------------------------
-set nonumber
+set number
 set ruler
 set nolist
 set nowrap
