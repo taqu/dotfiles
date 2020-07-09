@@ -1,0 +1,29 @@
+
+# vim-cheatsheet
+[[plugins]]
+repo = 'reireias/vim-cheatsheet'
+on_cmd = ['Cheat']
+
+# previm
+[[plugins]]
+repo = 'kannokanno/previm'
+on_cmd = ['PrevimOpen']
+
+# DoxygenToolkit.vim
+[[plugins]]
+repo = 'vim-scripts/DoxygenToolkit.vim'
+on_ft = ['c', 'cpp']
+
+# vim-clang-format
+# [[plugins]]
+# repo = 'rhysd/vim-clang-format'
+# on_ft = ['c', 'cpp']
+# hook_post_source = '''
+#  let g:clang_format#command = 'D:\\Programs\\LLVM\\bin\\clang-format'
+# "  let g:clang_format#detect_style_file = 1
+# "  let g:clang_format#code_style = 'llvm'
+# "  let g:clang_format#auto_format = 0
+# "  let g:clang_format#auto_format_on_insert_leave = 0
+# "  let g:clang_format#enable_fallback_style = 1
+# '''
+
