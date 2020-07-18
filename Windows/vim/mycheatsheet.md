@@ -181,20 +181,25 @@ gT or :tabprev or :tabp # move to the previous tab
 :set nobomb
 :set guifont=*
 :set cursorline
-:set cursorcolumn
 ```
 
 # Plugin keymaps
+let leader `<Space>`
+
+```
+let mapleader = "\<Space>"
+```
+
 ## Buffer
 ```
-<Space>bn : bnext
-<Space>bp : bprev
-<Space>bd : bd
+<Leader>bn : bnext
+<Leader>bp : bprev
+<Leader>bd : bd
 ```
 
 ## NERDTree
 ```
-<Space>n : toggle
+<Leader>n : toggle
 :NERDTree x:\   #Open a drive
 ? : open help
 m : open menu
@@ -221,14 +226,21 @@ gc (visual) # toggle selected
 
 ## DoxygenToolkit
 ```
-nnoremap <Space>dx : Dox<CR>
-"nnoremap <Space>dxl : DoxLic<CR>
-"nnoremap <Space>dxa : DoxAuthor<CR>
-nnoremap <Space>dxu : DoxUndox<CR>
-nnoremap <Space>dxb : DoxBlock<CR>
+nnoremap <Leader>dx : Dox<CR>
+"nnoremap <Leader>dxl : DoxLic<CR>
+"nnoremap <Leader>dxa : DoxAuthor<CR>
+nnoremap <Leader>dxu : DoxUndox<CR>
+nnoremap <Leader>dxb : DoxBlock<CR>
 ```
 
 ## vim-lsp
 ```
-nnoremap <Space>ldf : LspDocumentFormat<CR>
+nnoremap <Leader>ldf : LspDocumentFormat<CR>
 ```
+
+## vim-table-mode
+```
+<Leader>tm : 
+<Leader>tr : 
+```
+

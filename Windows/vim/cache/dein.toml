@@ -14,11 +14,13 @@ repo = 'tpope/vim-commentary'
 
 # NERDTree
 [[plugins]]
-repo = 'scrooloose/nerdtree'
+repo = 'preservim/nerdtree'
 
 # color theme 
+#[[plugins]]
+#repo = 'yasukotelin/shirotelin'
 [[plugins]]
-repo = 'yasukotelin/shirotelin'
+repo = 'sjl/badwolf'
 
 # vim-lsp
 [[plugins]]
@@ -48,4 +50,8 @@ repo = 'tpope/vim-fugitive'
 # sonictemplate
 [[plugins]]
 repo = 'mattn/sonictemplate-vim'
+
+# vim-surround
+[[plugins]]
+repo = 'tpope/vim-surround'
 

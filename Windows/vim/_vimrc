@@ -71,12 +71,24 @@ endif
 " To uninstall plugins
 " ----
 "  1. uncomment this, 2. reboot, and :call dein#recache_runtimepath()
-" call map(dein#check_clean(), "delete(v:val, 'rf')")
+call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 filetype plugin indent on
 syntax enable
 
 " NERDTree
+let NERDTreeShowBookmarks = 1
+" let NERDTreeIgnore = [`\.vim$`]
+
+" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+"   exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+"   exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+" endfunction
+" call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+" call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+" call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+" call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+" call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 
 " vim-airline
 let g:airline_theme = 'wombat'
@@ -109,19 +121,15 @@ let g:DoxygenToolkit_compactDoc = 'yes'
 let g:previm_open_cmd = 'X:\\Programs\\Mozilla\ Firefox\\firefox.exe'
 
 " sonictemplate
-let g:sonictemplate_vim_template_dir = '~/templates'
-let g:sonictemplate_vim_vars = {
-            \ '_': {
-            \ 'copyright': '',
-            \ },
-            \ 'cpp': {
-            \ 'author': '',
-            \ },
-            \}
+source $HOME/vim-sonictemplate.vim
 
-colorscheme shirotelin
+" colorscheme shirotelin
+colorscheme badwolf
+highlight Cursorline cterm=underline ctermfg=NONE ctermbg=NONE
 
 "---------------------------------------------------------------------------
+let mapleader = "\<Space>"
+
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -138,18 +146,18 @@ nnoremap S "_S
 vnoremap S "_S
 
 " Buffer
-nnoremap <Space>bn : bnext<CR>
-nnoremap <Space>bp : bprev<CR>
-nnoremap <Space>bd : bd<CR>
-nnoremap <Space>bw : bw<CR>
+nnoremap <Leader>bn : bnext<CR>
+nnoremap <Leader>bp : bprev<CR>
+nnoremap <Leader>bd : bd<CR>
+nnoremap <Leader>bw : bw<CR>
 
 " NERDTree
-nnoremap <Space>n : NERDTreeToggle<CR>
+nnoremap <Leader>n : NERDTreeToggle<CR>
 
 " DoxygenToolkit
-nnoremap <Space>dx : Dox<CR>
-" nnoremap <Space>dxl : DoxLic<CR>
-" nnoremap <Space>dxa : DoxAuthor<CR>
-nnoremap <Space>dxu : DoxUndox<CR>
-nnoremap <Space>dxb : DoxBlock<CR>
+nnoremap <Leader>dx : Dox<CR>
+" nnoremap <Leader>dxl : DoxLic<CR>
+" nnoremap <Leader>dxa : DoxAuthor<CR>
+nnoremap <Leader>dxu : DoxUndoc<CR>
+nnoremap <Leader>dxb : DoxBlock<CR>
 
