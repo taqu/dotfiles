@@ -50,15 +50,13 @@ let s:dein_dir = '~/cache/dein.vim'
 set runtimepath+=s:dein_dir
 let &runtimepath = s:dein_dir . "," . &runtimepath
 
-let s:dein_toml_dir = '~/cache/'
-let s:toml = s:dein_toml_dir . 'dein.toml'
-let s:lazy_toml = s:dein_toml_dir . 'dein_lazy.toml'
-
 if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
-
-        call dein#load_toml(s:toml, {'lazy':0})
-        call dein#load_toml(s:lazy_toml, {'lazy':1})
+    let s:dein_toml_dir = '~/cache/'
+    let s:toml = s:dein_toml_dir . 'dein.toml'
+    let s:lazy_toml = s:dein_toml_dir . 'dein_lazy.toml'
+    call dein#load_toml(s:toml, {'lazy':0})
+    call dein#load_toml(s:lazy_toml, {'lazy':1})
 
     call dein#end()
     call dein#save_state()
@@ -71,7 +69,7 @@ endif
 " To uninstall plugins
 " ----
 "  1. uncomment this, 2. reboot, and :call dein#recache_runtimepath()
-call map(dein#check_clean(), "delete(v:val, 'rf')")
+" call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 filetype plugin indent on
 syntax enable
@@ -85,10 +83,6 @@ let NERDTreeShowBookmarks = 1
 "   exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 " endfunction
 " call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-" call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 
 " vim-airline
 let g:airline_theme = 'wombat'
@@ -118,7 +112,7 @@ let g:DoxygenToolkit_interCommentBlock = ''
 let g:DoxygenToolkit_compactDoc = 'yes'
 
 " Previm
-let g:previm_open_cmd = 'X:\\Programs\\Mozilla\ Firefox\\firefox.exe'
+let g:previm_open_cmd = 'E:\\Programs\\Mozilla\ Firefox\\firefox.exe'
 
 " sonictemplate
 source $HOME/vim-sonictemplate.vim
