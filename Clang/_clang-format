@@ -4,18 +4,18 @@ BasedOnStyle:  Chromium
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
-AlignConsecutiveBitFields: false
+#AlignConsecutiveBitFields: false
 AlignConsecutiveDeclarations: false
 AlignConsecutiveMacros: false
 AlignEscapedNewlines: DontAlign
-AlignOperands: BreakBeforeBinaryOperators
+AlignOperands: true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortEnumsOnASingleLine: false
+#AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLambdasOnASingleLine: Empty
@@ -25,7 +25,7 @@ AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: MultiLine
 BinPackArguments: true
 BinPackParameters: true
-BitFieldColonSpacing: Both
+#BitFieldColonSpacing: Both
 BreakBeforeBraces: Custom
 BraceWrapping:   
   AfterCaseLabel: false
@@ -40,8 +40,8 @@ BraceWrapping:
   AfterExternBlock: true
   BeforeCatch: false
   BeforeElse: false
-  BeforeLambdaBody: false
-  BeforeWhile: false
+#  BeforeLambdaBody: false
+#  BeforeWhile: false
   IndentBraces: false
   SplitEmptyFunction: true
   SplitEmptyRecord: true
@@ -74,14 +74,14 @@ IncludeCategories:
   - Regex:           '.*'
     Priority:        1
 IncludeIsMainRegex: '(Test)?$'
-IndentCaseBlocks: false
+#IndentCaseBlocks: false
 IndentCaseLabels: false
-IndentExternBlock: true
+#IndentExternBlock: true
 IndentGotoLabels: false
 IndentPPDirectives: AfterHash
 IndentWidth: 4
 IndentWrappedFunctionNames: false
-InsertTrailingCommas: true
+#InsertTrailingCommas: true
 KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: ''
 MacroBlockEnd: ''
