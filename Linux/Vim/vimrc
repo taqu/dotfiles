@@ -1,0 +1,135 @@
+scriptencoding utf-8
+set encoding=utf-8
+
+" save
+set fileencoding=utf-8
+" load
+set fileencodings=utf-8,ucs-boms,euc-jp,cp932
+" linefeed
+set fileformats=unix,dos,mac
+
+" edit
+"----------------------------------------------
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+set showmatch
+set wildmenu
+set formatoptions+=mM
+
+" display
+"----------------------------------------------
+set number
+set ruler
+set nolist
+set nowrap
+set laststatus=1
+set cmdheight=1
+set showcmd
+set title
+set ambiwidth=double
+
+" backup
+"----------------------------------------------
+set nobackup
+set noundofile
+set noswapfile
+
+" search
+"----------------------------------------------
+set incsearch
+set ignorecase
+set smartcase
+set wrapscan
+set hlsearch
+
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+if &compatible
+    set nocompatible
+endif
+
+" Add the dein installation directory into runtimepath
+let s:dein_dir = '~/.cache/dein'
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+
+if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir)
+    let s:dein_toml_dir = '~/.cache/'
+    let s:toml = s:dein_toml_dir . 'dein.toml'
+    let s:lazy_toml = s:dein_toml_dir . 'dein_lazy.toml'
+    call dein#load_toml(s:toml, {'lazy':0})
+    call dein#load_toml(s:lazy_toml, {'lazy':1})
+
+    call dein#end()
+    call dein#save_state()
+endif
+
+" if dein#check_install()
+"   call dein#install()
+" endif
+
+" To uninstall plugins
+" 1. uncomment this, 2. reboot, and :call dein#recache_runtimepath()
+" call map(dein#check_clean(), "delete(v:val, 'rf')")
+
+filetype plugin indent on
+syntax enable
+
+ " NERDTree
+let NERDTreeShowBookmarks = 1
+
+" vim-lsp
+source ~/.vim/vim-lsp.vim
+
+" vim-cheatsheet
+let g:cheatsheet#cheat_file = '~/.vim/mycheatsheet.md'
+
+" DoxygenToolkit
+let g:DoxygenToolkit_interCommentTag = ''
+let g:DoxygenToolkit_interCommentBlock = ''
+let g:DoxygenToolkit_compactDoc = 'yes'
+
+" colorscheme badwolf
+colorscheme badwolf
+highlight Cursorline cterm=underline ctermfg=NONE ctermbg=NONE
+
+"---------------------------------------------------------------------------
+let mapleader = "\<Space>"
+
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+nnoremap Q <Nop>
+nnoremap qq <Nop>
+
+nnoremap x "_x
+vnoremap x "_x
+nnoremap X "_X
+vnoremap X "_X
+
+nnoremap s "_s
+vnoremap s "_s
+nnoremap S "_S
+vnoremap S "_S
+
+" Buffer
+nnoremap <Leader>bn : bnext<CR>
+nnoremap <Leader>bp : bprev<CR>
+nnoremap <Leader>bd : bd<CR>
+nnoremap <Leader>bw : bw<CR>
+
+" NERDTree
+nnoremap <Leader>n : NERDTreeToggle<CR>
+
+" DoxygenToolkit
+nnoremap <Leader>dx : Dox<CR>
+" nnoremap <Leader>dxl : DoxLic<CR>
+" nnoremap <Leader>dxa : DoxAuthor<CR>
+nnoremap <Leader>dxu : DoxUndoc<CR>
+nnoremap <Leader>dxb : DoxBlock<CR>
+

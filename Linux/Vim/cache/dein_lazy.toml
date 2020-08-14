@@ -1,0 +1,16 @@
+
+# vim-cheatsheet
+#[[plugins]]
+#repo = 'reireias/vim-cheatsheet'
+#on_cmd = ['Cheat']
+
+# DoxygenToolkit.vim
+[[plugins]]
+repo = 'vim-scripts/DoxygenToolkit.vim'
+on_ft = ['c', 'cpp']
+
+# vim-table-mode
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+on_ft = ['text', 'markdown']
+
