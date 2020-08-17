@@ -17,24 +17,29 @@ repo = 'tpope/vim-commentary'
 repo = 'preservim/nerdtree'
 
 # color theme 
-#[[plugins]]
-#repo = 'yasukotelin/shirotelin'
+[[plugins]]
+repo = 'yasukotelin/shirotelin'
 [[plugins]]
 repo = 'sjl/badwolf'
 
-# vim-lsp
-
-#[[plugins]]
-#repo = 'prabirshrestha/asyncomplete.vim'
-#[[plugins]]
-#repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
+# vim-operator-user
 [[plugins]]
-repo = 'prabirshrestha/vim-lsp'
+repo = 'kana/vim-operator-user'
 
+# clang-format
 [[plugins]]
-repo = 'mattn/vim-lsp-settings'
-depends = ['vim-lsp']
+repo = 'rhysd/vim-clang-format'
+hook_add = '''
+    let g:clang_format#command = 'X:\\LLVM\\bin\\clang-format'
+    let g:clang_format#detect_style_file = 1
+    let g:clang_format#code_style = 'chromium'
+    let g:clang_format#style_options = {
+    \ "IndentWidth": 4,
+    \ "TabWidth": 4,
+    \ "UseTab": "Never"}
+
+    autocmd FileType c,cpp map <buffer><Leader>cf <Plug>(operator-clang-format)
+'''
 
 # vim-fugitive
 [[plugins]]

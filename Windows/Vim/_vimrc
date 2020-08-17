@@ -100,9 +100,6 @@ let g:airline_section_z = '%3l/%L:%3v'
 let g:airline#extensions#default#section_truncate_width = {}
 let g:airline#whitespace#enabled = 1
 
-" vim-lsp
-source $HOME/vim-lsp.vim
-
 " vim-cheatsheet
 let g:cheatsheet#cheat_file = '~/mycheatsheet.md'
 
