@@ -23,3 +23,6 @@ set guioptions-=T
 " colorscheme shirotelin
 colorscheme badwolf
 highlight CursorLine gui=underline guifg=NONE guibg=NONE
+
+" autocmd FocusGained * set transparency=220
+" autocmd FocusLost * set transparency=200

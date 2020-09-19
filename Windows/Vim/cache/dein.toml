@@ -26,20 +26,9 @@ repo = 'sjl/badwolf'
 [[plugins]]
 repo = 'kana/vim-operator-user'
 
-# clang-format
-[[plugins]]
-repo = 'rhysd/vim-clang-format'
-hook_add = '''
-    let g:clang_format#command = 'X:\\LLVM\\bin\\clang-format'
-    let g:clang_format#detect_style_file = 1
-    let g:clang_format#code_style = 'chromium'
-    let g:clang_format#style_options = {
-    \ "IndentWidth": 4,
-    \ "TabWidth": 4,
-    \ "UseTab": "Never"}
-
-    autocmd FileType c,cpp map <buffer><Leader>cf <Plug>(operator-clang-format)
-'''
+# vim-clang-format
+#[[plugins]]
+#repo = 'rhysd/vim-clang-format'
 
 # vim-fugitive
 [[plugins]]
@@ -52,4 +41,34 @@ repo = 'mattn/sonictemplate-vim'
 # vim-surround
 [[plugins]]
 repo = 'tpope/vim-surround'
+
+# vim-lsp
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'allowlist': ['c', 'cpp'],
+        \ })
+endif
+
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_auto_enable = 1
+let g:lsp_preview_keep_focus = 0
+let g:lsp_preview_float = 1
+let g:lsp_preview_autoclose = 1
+let g:lsp_insert_text_enabled = 1
+let g:lsp_text_edit_enabled = 1
+let g:lsp_documentation_float = 1
+let g:lsp_diagnostics_echo_cursor = 0
+let g:lsp_diagnostics_float_cursor = 0
+let g:lsp_signs_enabled = 0
+let g:lsp_fold_enabled = 1
+let g:lsp_semantic_enabled = 0
+
+let g:lsp_log_verbose = 0
+" let g:lsp_log_file = ''
+'''
 
