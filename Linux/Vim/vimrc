@@ -84,9 +84,6 @@ syntax enable
  " NERDTree
 let NERDTreeShowBookmarks = 1
 
-" vim-lsp
-source ~/.vim/vim-lsp.vim
-
 " vim-cheatsheet
 let g:cheatsheet#cheat_file = '~/.vim/mycheatsheet.md'
 
