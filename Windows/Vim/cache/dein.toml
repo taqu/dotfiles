@@ -56,7 +56,7 @@ if executable('clangd')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'clangd',
         \ 'cmd': {server_info->['clangd']},
-        \ 'allowlist': ['c', 'cpp'],
+        \ 'whitelist': ['c', 'cpp'],
         \ })
 endif
 
@@ -65,7 +65,16 @@ if executable(g:gopls_bin)
     au User lsp_setup call lsp#register_server({
         \ 'name': 'gopls',
         \ 'cmd': {server_info->[g:gopls_bin]},
-        \ 'allowlist': ['go'],
+        \ 'whitelist': ['go'],
+		\ 'workspace_config': {'gopls': {
+		\		'staticcheck': v:true,
+		\		'completeUmimported': v:true,
+		\		'caseSensitiveCompletion': v:true,
+		\		'usePlaceholders': v:true,
+		\		'completionDocumentation': v:true,
+		\		'watchFileChangs': v:true,
+		\		'hoverKind': 'SingleLine',
+		\	}},
         \ })
 endif
 

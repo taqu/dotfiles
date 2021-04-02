@@ -19,7 +19,3 @@ on_ft = ['c', 'cpp']
 repo = 'dhruvasagar/vim-table-mode'
 on_ft = ['text', 'markdown']
 
-# vim-yaml
-[[plugins]]
-repo = 'stephpy/vim-yaml'
-on_ft = ['yaml']
