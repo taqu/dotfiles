@@ -42,6 +42,12 @@ repo = 'mattn/sonictemplate-vim'
 [[plugins]]
 repo = 'tpope/vim-surround'
 
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
+
 # vim-lsp
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
@@ -54,21 +60,42 @@ if executable('clangd')
         \ })
 endif
 
-let g:lsp_diagnostics_enabled = 0
-let g:lsp_auto_enable = 1
-let g:lsp_preview_keep_focus = 0
-let g:lsp_preview_float = 1
-let g:lsp_preview_autoclose = 1
-let g:lsp_insert_text_enabled = 1
-let g:lsp_text_edit_enabled = 1
-let g:lsp_documentation_float = 1
-let g:lsp_diagnostics_echo_cursor = 0
-let g:lsp_diagnostics_float_cursor = 0
-let g:lsp_signs_enabled = 0
-let g:lsp_fold_enabled = 1
-let g:lsp_semantic_enabled = 0
+let g:gopls_bin = $GOPATH."\\bin\\gopls"
+if executable(g:gopls_bin)
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->[g:gopls_bin]},
+        \ 'allowlist': ['go'],
+        \ })
+endif
 
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> <C-]> <plug>(lsp-definition)
+    nmap <buffer> <f2> <plug>(lsp-rename)
+    nmap <buffer> <Leader>d <plug>(lsp-type-definition)
+    nmap <buffer> <Leader>r <plug>(lsp-references)
+    nmap <buffer> <Leader>i <plug>(lsp-implementation)
+    inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+let g:lsp_diagnostics_enabled = 0
+"let g:lsp_diagnostics_echo_cursor = 1
+"let g:asyncomplete_auto_popup = 1
+"let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
+let g:lsp_text_edit_enabled = 1
+let g:lsp_preview_float = 1
+let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_log_verbose = 0
 " let g:lsp_log_file = ''
+
 '''
 
