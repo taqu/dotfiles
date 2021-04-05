@@ -68,11 +68,11 @@ if executable(g:gopls_bin)
         \ 'whitelist': ['go'],
 		\ 'workspace_config': {'gopls': {
 		\		'staticcheck': v:true,
-		\		'completeUmimported': v:true,
+		\		'completeUnimported': v:true,
 		\		'caseSensitiveCompletion': v:true,
 		\		'usePlaceholders': v:true,
 		\		'completionDocumentation': v:true,
-		\		'watchFileChangs': v:true,
+		\		'watchFileChanges': v:true,
 		\		'hoverKind': 'SingleLine',
 		\	}},
         \ })
@@ -95,7 +95,7 @@ augroup lsp_install
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
-let g:lsp_diagnostics_enabled = 0
+let g:lsp_diagnostics_enabled = 1
 "let g:lsp_diagnostics_echo_cursor = 1
 "let g:asyncomplete_auto_popup = 1
 "let g:asyncomplete_auto_completeopt = 0
