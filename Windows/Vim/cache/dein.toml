@@ -56,7 +56,7 @@ if executable('clangd')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'clangd',
         \ 'cmd': {server_info->['clangd']},
-        \ 'whitelist': ['c', 'cpp'],
+        \ 'whitelist': ['c', 'cpp']
         \ })
 endif
 
@@ -66,15 +66,16 @@ if executable(g:gopls_bin)
         \ 'name': 'gopls',
         \ 'cmd': {server_info->[g:gopls_bin]},
         \ 'whitelist': ['go'],
-		\ 'workspace_config': {'gopls': {
-		\		'staticcheck': v:true,
-		\		'completeUnimported': v:true,
-		\		'caseSensitiveCompletion': v:true,
-		\		'usePlaceholders': v:true,
-		\		'completionDocumentation': v:true,
-		\		'watchFileChanges': v:true,
-		\		'hoverKind': 'SingleLine',
-		\	}},
+        \ 'workspace_config': {'gopls': {
+        \     'staticcheck': v:true,
+        \     'completeUnimported': v:true,
+        \     'caseSensitiveCompletion': v:true,
+        \     'usePlaceholders': v:true,
+        \     'completionDocumentation': v:true,
+        \     'watchFileChanges': v:true,
+        \     'hoverKind': 'SingleLine',
+        \     'expandWorkspaceToModule': v:true
+        \  }}
         \ })
 endif
 
@@ -104,7 +105,7 @@ let g:lsp_text_edit_enabled = 1
 let g:lsp_preview_float = 1
 let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_log_verbose = 0
-" let g:lsp_log_file = ''
+"let g:lsp_log_file = ''
 
 '''
 
