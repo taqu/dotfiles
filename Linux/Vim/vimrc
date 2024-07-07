@@ -119,11 +119,15 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-surround'
 Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
-Plug 'vim-scripts/DoxygenToolkit.vim', { 'for': ['c', 'cpp']}
-Plug 'dhruvasagar/vim-table-mode', { 'for': ['text', 'markdown']}
+Plug 'vim-scripts/DoxygenToolkit.vim', {'for': ['c', 'cpp']}
+Plug 'dhruvasagar/vim-table-mode', {'for': ['text', 'markdown']}
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'rust-lang/rust.vim', { 'for': 'rust'}
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'keremc/asyncomplete-clang.vim', {'for': ['c','cpp']}
+Plug 'keremc/asyncomplete-racer.vim', {'for': 'rust'}
+Plug 'prabirshrestha/asyncomplete-gocode.vim', {'for': 'go'}
 call plug#end()
 
 filetype plugin indent on
@@ -156,6 +160,40 @@ let g:DoxygenToolkit_compactDoc = 'yes'
 " colorscheme badwolf
 colorscheme badwolf
 highlight Cursorline cterm=underline ctermfg=NONE ctermbg=NONE
+
+" Language Server Protocol
+ " asyncomplete
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
+ " asyncomplete-clang
+ autocmd User asyncomplete_setup call asyncomplete#register_source(
+    \ asyncomplete#sources#clang#get_source_options({
+    \     'config': {
+    \         'clang_path': '/opt/llvm/bin/clang',
+    \         'clang_args': {
+    \             'default': ['-I/opt/llvm/include'],
+    \             'cpp': ['-std=c++20', '-I/opt/llvm/include']
+    \         }
+    \     }
+    \ }))
+
+autocmd User asyncomplete_setup call asyncomplete#register_source(
+    \ asyncomplete#sources#racer#get_source_options({
+    \     'config': {
+    \         'racer_path': ''
+    \     }
+    \ }))
+
+call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
+    \ 'name': 'gocode',
+    \ 'allowlist': ['go'],
+    \ 'completor': function('asyncomplete#sources#gocode#completor'),
+    \ 'config': {
+    \    'gocode_path': expand('~/go/bin/gocode')
+    \  },
+    \ }))
 
 "---------------------------------------------------------------------------
 let mapleader = "\<Space>"
@@ -193,3 +231,4 @@ nnoremap <Leader>dxb : DoxBlock<CR>
 
 " Table Mode
 nnoremap <Leader>tm : TableModeToggle<CR>
+
