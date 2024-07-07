@@ -54,32 +54,52 @@ if &compatible
     set nocompatible
 endif
 
-" Add the dein installation directory into runtimepath
-let s:dein_dir = '~/.cache/dein'
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-
-if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir)
-    let s:dein_toml_dir = '~/.cache/'
-    let s:toml = s:dein_toml_dir . 'dein.toml'
-    let s:lazy_toml = s:dein_toml_dir . 'dein_lazy.toml'
-    call dein#load_toml(s:toml, {'lazy':0})
-    call dein#load_toml(s:lazy_toml, {'lazy':1})
-
-    call dein#end()
-    call dein#save_state()
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
 endif
 
-" if dein#check_install()
-"   call dein#install()
-" endif
-
-" To uninstall plugins
-" 1. uncomment this, 2. reboot, and :call dein#recache_runtimepath()
-" call map(dein#check_clean(), "delete(v:val, 'rf')")
+" Plugins
+call plug#begin()
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'sjl/badwolf'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-surround'
+Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+Plug 'vim-scripts/DoxygenToolkit.vim', { 'for': ['c', 'cpp']}
+Plug 'dhruvasagar/vim-table-mode', { 'for': ['text', 'markdown']}
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+call plug#end()
 
 filetype plugin indent on
 syntax enable
+
+" Airline
+let g:airline_theme = 'wombat'
+set laststatus=2
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'y', 'z']]
+let g:airline_section_c = '%t'
+let g:airline_section_x = '%{&filetype}'
+let g:airline_section_z = '%3l:%2v'
+let g:airline#extensions#default#section_truncate_width = {}
+let g:airline#extensions#whitespace#enabled = 1
 
  " NERDTree
 let NERDTreeShowBookmarks = 1
@@ -130,3 +150,5 @@ nnoremap <Leader>dx : Dox<CR>
 nnoremap <Leader>dxu : DoxUndoc<CR>
 nnoremap <Leader>dxb : DoxBlock<CR>
 
+" Table Mode
+nnoremap <Leader>tm : TableModeToggle<CR>
