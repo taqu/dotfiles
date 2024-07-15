@@ -125,7 +125,6 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'rhysd/vim-clang-format'
-Plug 'kana/vim-operator-user'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'keremc/asyncomplete-clang.vim', {'for': ['c','cpp']}
 Plug 'keremc/asyncomplete-racer.vim', {'for': 'rust'}
@@ -233,4 +232,5 @@ nnoremap <Leader>dxb : DoxBlock<CR>
 
 " Table Mode
 nnoremap <Leader>tm : TableModeToggle<CR>
-
+" clang-format
+autocmd FileType c,cpp,objc vnoremap <buffer>== : ClangFormat<CR>
