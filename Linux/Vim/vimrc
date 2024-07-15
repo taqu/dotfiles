@@ -124,6 +124,8 @@ Plug 'dhruvasagar/vim-table-mode', {'for': ['text', 'markdown']}
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'rhysd/vim-clang-format'
+Plug 'kana/vim-operator-user'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'keremc/asyncomplete-clang.vim', {'for': ['c','cpp']}
 Plug 'keremc/asyncomplete-racer.vim', {'for': 'rust'}
