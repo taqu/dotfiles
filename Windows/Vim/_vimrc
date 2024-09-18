@@ -1,122 +1,202 @@
 scriptencoding utf-8
 set encoding=utf-8
 
-" saving
+" save
 set fileencoding=utf-8
-" loading
+" load
 set fileencodings=utf-8,ucs-boms,euc-jp,cp932
 " linefeed
 set fileformats=unix,dos,mac
 
-set ambiwidth=double
-
-"---------------------------------------------------------------------------
+" edit
+"----------------------------------------------
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-
 set expandtab
-
 set autoindent
 set smartindent
+set backspace=indent,eol,start
+set showmatch
+set wildmenu
+set formatoptions+=mM
 
-"---------------------------------------------------------------------------
+" display
+"----------------------------------------------
 set number
 set ruler
 set nolist
-set cursorline
+set nowrap
+set laststatus=1
+set cmdheight=1
+set showcmd
+set title
+set ambiwidth=double
 
-"---------------------------------------------------------------------------
+" backup
+"----------------------------------------------
 set nobackup
 set noundofile
 set noswapfile
 
-"---------------------------------------------------------------------------
+" search
+"----------------------------------------------
 set incsearch
 set ignorecase
 set smartcase
+set wrapscan
 set hlsearch
 
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
-"---------------------------------------------------------------------------
 if &compatible
     set nocompatible
 endif
 
-" Add the dein installation directory into runtimepath
-let s:dein_dir = '~/cache/dein.vim'
-set runtimepath+=s:dein_dir
-"let &runtimepath = s:dein_dir . "," . &runtimepath
-
-if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir)
-    let s:dein_toml_dir = '~/cache/'
-    let s:toml = s:dein_toml_dir . 'dein.toml'
-    let s:lazy_toml = s:dein_toml_dir . 'dein_lazy.toml'
-    call dein#load_toml(s:toml, {'lazy':0})
-    call dein#load_toml(s:lazy_toml, {'lazy':1})
-
-    call dein#end()
-    call dein#save_state()
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
 endif
 
-" if dein#check_install()
-"     call dein#install()
-" endif
+if executable('rust-analyzer')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'rust-analyzer',
+                    \ 'cmd': {server_info->['rust-analyzer']},
+                    \ 'whitelist': ['rust'],
+                    \ })
+        autocmd FileType rust setlocal omnifunc=lsp#complete
+    augroup end
+endif
 
-" To uninstall plugins
-" ----
-"  1. uncomment this, 2. reboot, and :call dein#recache_runtimepath()
-" call map(dein#check_clean(), "delete(v:val, 'rf')")
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    "let g:lsp_format_sync_timeout = 1000
+    "autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" Plugins
+call plug#begin()
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'sjl/badwolf'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-surround'
+Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+Plug 'vim-scripts/DoxygenToolkit.vim', {'for': ['c', 'cpp']}
+Plug 'dhruvasagar/vim-table-mode', {'for': ['text', 'markdown']}
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'rhysd/vim-clang-format'
+Plug 'kana/vim-operator-user'
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'keremc/asyncomplete-clang.vim', {'for': ['c','cpp']}
+Plug 'keremc/asyncomplete-racer.vim', {'for': 'rust'}
+Plug 'prabirshrestha/asyncomplete-gocode.vim', {'for': 'go'}
+Plug 'rking/ag.vim'
+call plug#end()
 
 filetype plugin indent on
 syntax enable
 
-" NERDTree
-let NERDTreeShowBookmarks = 1
-" let NERDTreeIgnore = [`\.vim$`]
-
-" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-"   exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-"   exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-" endfunction
-" call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-
-" vim-airline
+" Airline
 let g:airline_theme = 'wombat'
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'y', 'z']]
 let g:airline_section_c = '%t'
 let g:airline_section_x = '%{&filetype}'
-let g:airline_section_z = '%3l/%L:%3v'
+let g:airline_section_z = '%3l:%2v'
 let g:airline#extensions#default#section_truncate_width = {}
-let g:airline#whitespace#enabled = 1
+let g:airline#extensions#whitespace#enabled = 1
+
+ " NERDTree
+let NERDTreeShowBookmarks = 1
 
 " vim-cheatsheet
-let g:cheatsheet#cheat_file = '~/mycheatsheet.md'
+let g:cheatsheet#cheat_file = '.\\mycheatsheet.md'
 
 " DoxygenToolkit
 let g:DoxygenToolkit_interCommentTag = ''
 let g:DoxygenToolkit_interCommentBlock = ''
 let g:DoxygenToolkit_compactDoc = 'yes'
 
-" Previm
-let g:previm_open_cmd = 'E:\\Programs\\Mozilla\ Firefox\\firefox.exe'
-
-" sonictemplate
-source $HOME/vim-sonictemplate.vim
-
-" colorscheme shirotelin
+" colorscheme badwolf
 colorscheme badwolf
 highlight Cursorline cterm=underline ctermfg=NONE ctermbg=NONE
+
+" Language Server Protocol
+ " asyncomplete
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
+ " asyncomplete-clang
+ autocmd User asyncomplete_setup call asyncomplete#register_source(
+    \ asyncomplete#sources#clang#get_source_options({
+    \     'config': {
+    \         'clang_path': 'D:\\Programs\\LLVM\bin',
+    \         'clang_args': {
+    \             'default': ['-ID:\\Programs\\LLVM\\include'],
+    \             'cpp': ['-std=c++20', '-ID:\\Programs\\LLVM\\include']
+    \         }
+    \     }
+    \ }))
+
+autocmd User asyncomplete_setup call asyncomplete#register_source(
+    \ asyncomplete#sources#racer#get_source_options({
+    \     'config': {
+    \         'racer_path': ''
+    \     }
+    \ }))
+
+call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
+    \ 'name': 'gocode',
+    \ 'allowlist': ['go'],
+    \ 'completor': function('asyncomplete#sources#gocode#completor'),
+    \ 'config': {
+    \    'gocode_path': 'd:\\Programs\\go\\bin\\gocode'
+    \  },
+    \ }))
 
 "---------------------------------------------------------------------------
 let mapleader = "\<Space>"
@@ -152,3 +232,8 @@ nnoremap <Leader>dx : Dox<CR>
 nnoremap <Leader>dxu : DoxUndoc<CR>
 nnoremap <Leader>dxb : DoxBlock<CR>
 
+" Table Mode
+nnoremap <Leader>tm : TableModeToggle<CR>
+
+" clang-format
+autocmd FileType c,cpp,objc vnoremap <buffer>== : ClangFormat<CR>
